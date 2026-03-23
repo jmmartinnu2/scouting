@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINAL SCOUTING REPORT | Ismael Ruesca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,700;1,500&family=Oswald:wght@300;500;700&display=swap');
+        
+        :root {
+            --primary: #10b981;
+            --gold: #f59e0b;
+            --bg-dark: #020617;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+            background-image: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+            background-attachment: fixed;
+        }
+        
+        .fifa-font { font-family: 'Oswald', sans-serif; }
+
+        .scout-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+        }
+
+        .gold-border { border-left: 4px solid var(--gold); }
+        .emerald-border { border-left: 4px solid #10b981; }
+
+        .attribute-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .progress-fill { height: 100%; border-radius: 10px; transition: width 2s ease-out; }
+
+        .radar-box { height: 320px; width: 100%; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .scout-card { border: 1px solid #ddd !important; background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body class="p-0 m-0">
+
+    <nav class="no-print bg-slate-950/80 border-b border-slate-800 p-4 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="fifa-font text-lg font-bold italic tracking-tighter">SCOUTING REALIZADO POR: <span class="text-amber-500"> JOSE M. AGENTE FIFA: 202406-6950</span></span>
+                <span class="text-[0.6rem] uppercase tracking-widest text-slate-500">Ismael Ruesca · Evaluación 360º</span>
+            </div>
+            <div class="flex items-center gap-4 text-[0.6rem] font-bold uppercase tracking-widest">
+                <span class="px-3 py-1 bg-amber-500/10 text-amber-500 rounded border border-amber-500/20">CONFIDENCIAL</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-6 md:p-12 space-y-12">
+
+        <!-- CABECERA DE PERFIL -->
+        <header class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="md:col-span-2 space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="h-[2px] w-12 bg-amber-500"></span>
+                    <span class="text-xs font-bold text-amber-500 uppercase tracking-[0.3em]">Auditoría Técnica Elite</span>
+                </div>
+                <h1 class="fifa-font text-6xl md:text-7xl font-bold uppercase italic leading-none">ISMAEL <span class="text-slate-500">RUESCA</span></h1>
+                <p class="text-slate-400 text-sm max-w-xl italic leading-relaxed">
+                    Jugador polivalente con un biotipo dominante. Tras la observación en tres roles diferenciados (DFC, MCD, MCDO), se identifica un potencial de proyección condicionado a la evolución de su liderazgo comunicativo y la optimización de su toma de decisiones bajo presión en zonas de inicio.
+                </p>
+            </div>
+            <div class="scout-card rounded-3xl p-8 flex flex-col items-center justify-center text-center border border-amber-500/20">
+                <div class="text-[0.6rem] uppercase text-slate-500 font-bold mb-2">Valoración final</div>
+                <div class="fifa-font text-7xl font-bold text-white italic">8.5</div>
+                <div class="flex gap-1 mt-2">
+                    <i class="fas fa-star text-amber-500 text-xs"></i>
+                    <i class="fas fa-star text-amber-500 text-xs"></i>
+                    <i class="fas fa-star text-amber-500 text-xs"></i>
+                    <i class="fas fa-star text-amber-500 text-xs"></i>
+                    <i class="fas fa-star-half-alt text-amber-500 text-xs"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- ANÁLISIS 360º - COMPARATIVA DE ROLES -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="scout-card rounded-2xl p-8">
+                <h3 class="fifa-font text-xl italic font-bold uppercase mb-8 border-b border-slate-800 pb-4">Consolidación de Atributos</h3>
+                <div class="radar-box">
+                    <canvas id="radarFinal"></canvas>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="scout-card rounded-2xl p-8 gold-border">
+                    <h3 class="text-[0.7rem] font-bold uppercase tracking-widest text-amber-500 mb-6">Conclusiones del Análisis realizado</h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="text-amber-500 pt-1"><i class="fas fa-check-double"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase mb-1">Impacto Físico y Zancada</h4>
+                                <p class="text-xs text-slate-400 italic">Domina por envergadura. Su mejora en la velocidad de carrera larga le permite corregir errores propios y ajenos con solvencia.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-amber-500 pt-1"><i class="fas fa-project-diagram"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase mb-1">Versatilidad Táctica</h4>
+                                <p class="text-xs text-slate-400 italic">Capaz de mutar de central corrector a MCDO llegador (no llegando a ser un mediapunta). Su polivalencia es su mayor activo para el fútbol moderno.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-amber-500 pt-1"><i class="fas fa-bullseye"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase mb-1">Capacidad de Llegada y Técnica depurada</h4>
+                                <p class="text-xs text-slate-400 italic">Eficacia en el remate y control orientado de élite, detalles observados de jugador diferente. Hemos observado que tiene llegada al area ofensivamente, queda ver más en ese aspecto para determinar posible posicionamiento mas ofensivo que defensivo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN PERSONALIZADA: PUNTOS ESPECÍFICOS A MEJORAR -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-exclamation-triangle text-amber-500"></i>
+                <h2 class="fifa-font text-3xl italic font-bold uppercase tracking-tighter">Hoja de Ruta de Mejora Personalizada</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Liderazgo y Presencia -->
+                <div class="scout-card rounded-2xl p-6 border-t-4 border-slate-700">
+                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-comment-dots text-white"></i>
+                    </div>
+                    <h3 class="text-sm font-bold uppercase mb-3">Liderazgo & Visibilidad</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed italic mb-4">
+                        Es imperativo que el jugador aumente su <strong>presencia verbal</strong>. Un perfil de su calidad física debe "mandar" en el campo.
+                    </p>
+                    <ul class="text-[0.65rem] space-y-2 text-slate-300">
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Pedir el balón con autoridad en zonas de inicio.</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Comunicación activa en el perfilado de compañeros.</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Hacerse notar como el referente táctico.</li>
+                    </ul>
+                </div>
+
+                <!-- Reacción Corta -->
+                <div class="scout-card rounded-2xl p-6 border-t-4 border-slate-700">
+                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-white"></i>
+                    </div>
+                    <h3 class="text-sm font-bold uppercase mb-3">Velocidad de Reacción</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed italic mb-4">
+                        Consolidada la velocidad en larga distancia, el foco debe pasar a la <strong>explosividad en los primeros 2 metros</strong>.
+                    </p>
+                    <ul class="text-[0.65rem] space-y-2 text-slate-300">
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Mejorar el primer paso tras pérdida de balón.</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Reducción del tiempo de respuesta ante giros imprevistos.</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Entrenamiento específico de agilidad reactiva.</li>
+                    </ul>
+                </div>
+
+                <!-- Gestión de Riesgo (Zona 6) -->
+                <div class="scout-card rounded-2xl p-6 border-t-4 border-slate-700">
+                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-white"></i>
+                    </div>
+                    <h3 class="text-sm font-bold uppercase mb-3">Visión & Juego a 1 Toque</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed italic mb-4">
+                        Minimizar el riesgo en la <strong>Zona de Seguridad (Zona 6)</strong> mediante la mejora del escaneo previo.
+                    </p>
+                    <ul class="text-[0.65rem] space-y-2 text-slate-300">
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Limitar conducciones excesivas en campo propio.</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Ejecución de primer toque: "Pensar antes de recibir".</li>
+                        <li><i class="fas fa-minus mr-2 text-amber-500"></i>Asegurar pase vertical sin compromiso del bloque.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESUMEN DE MÉTRICAS FINALES -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 border-t border-slate-900">
+            <div class="space-y-4">
+                <h4 class="text-[0.65rem] font-bold uppercase text-slate-500 tracking-widest">Balance de Rendimiento</h4>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-[0.6rem] font-bold mb-2 uppercase"><span>Dominio y Posesión (Perfil 6/8)</span><span class="text-emerald-500">92%</span></div>
+                        <div class="attribute-bar"><div class="progress-fill bg-emerald-500" style="width: 92%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[0.6rem] font-bold mb-2 uppercase"><span>Eficacia en Transición y Salida</span><span class="text-amber-500">65%</span></div>
+                        <div class="attribute-bar"><div class="progress-fill bg-amber-500" style="width: 75%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[0.6rem] font-bold mb-2 uppercase"><span>Jerarquía y Presencia Vocal</span><span class="text-red-500">40%</span></div>
+                        <div class="attribute-bar"><div class="progress-fill bg-red-500" style="width: 40%"></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scout-card rounded-2xl p-8 italic text-sm text-slate-400 leading-relaxed border border-white/5">
+                <span class="text-amber-500 font-bold">VALORACIÓN FINAL:</span> Tras el análisis exhaustivo en diferentes contextos competitivos, definimos a Ismael Ruesca como un perfil híbrido de alta polivalencia funcional. Su capacidad para jerarquizar el carril central es total: posee la contundencia necesaria para actuar como central corrector, la lectura para ser el ancla (5/6) y la llegada explosiva de un mediocentro ofensivo. Sin embargo, bajo nuestro criterio técnico, su techo evolutivo y demarcación natural se halla en el rol de "6/8" (Pivote Organizador). Es en la zona de gestación donde Ismael despliega su mejor versión; es un futbolista nacido para tener el balón, organizar el flujo del juego y ser el epicentro de la posesión. Su combinación de zancada y técnica individual le permite no solo dar continuidad, sino romper líneas con una verticalidad impropia de su edad. Su consolidación en la élite depende ahora de una metamorfosis en el liderazgo: Vocalía y Jerarquía: Debe "apropiarse" del ecosistema del partido. Un jugador de su importancia tiene que mandar, hablar y hacerse notar de forma constante, exigiendo el cuero en cada fase. Optimización del Ciclo de Juego: Es imperativo que interiorice la secuencia de un solo contacto en zonas de inicio. En la base de la jugada (Zona 6), el talento debe estar al servicio de la seguridad: menos conducción, más escaneo previo y máxima velocidad en la entrega. Reactividad en Corto: Una vez pulida su reacción en los primeros metros para complementar su gran zancada larga, Ismael se convertirá en un pivote inalcanzable en el duelo. En resumen, estamos ante un diamante táctico. Si Ismael asume su rol de director de orquesta, minimiza los riesgos en el inicio y potencia su comunicación verbal, su proyección no tiene límites en estructuras de fútbol profesional.
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE MATERIAL AUDIOVISUAL (HIGHLIGHTS) -->
+        <section class="space-y-6 pt-8 border-t border-slate-900">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-film text-amber-500 text-2xl"></i>
+                <h2 class="fifa-font text-3xl italic font-bold uppercase tracking-tighter">Material Audiovisual</h2>
+            </div>
+
+            <a href="https://youtu.be/uCVtjIdZvuA" target="_blank" rel="noopener noreferrer" class="block group transition-transform duration-300 hover:-translate-y-1">
+                <div class="scout-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-amber-500/20 group-hover:border-amber-500/60 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] transition-all">
+                    
+                    <div class="flex items-center gap-6 w-full md:w-auto">
+                        <!-- Icono de YouTube con efecto Hover -->
+                        <div class="flex-shrink-0 w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center border border-red-500/30 group-hover:bg-red-600/20 group-hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-youtube text-red-500 text-3xl"></i>
+                        </div>
+                        
+                        <!-- Textos -->
+                        <div>
+                            <h3 class="fifa-font text-xl md:text-2xl font-bold uppercase italic text-white mb-1 group-hover:text-amber-500 transition-colors">
+                                Highlights Ismael Ruesca Godino
+                            </h3>
+                            <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Temporada 2025-2026</p>
+                        </div>
+                    </div>
+
+                    <!-- Botón de acción -->
+                    <div class="flex-shrink-0 w-full md:w-auto text-center md:text-left mt-4 md:mt-0">
+                        <span class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500/10 text-amber-500 rounded-lg border border-amber-500/20 font-bold uppercase text-xs tracking-widest group-hover:bg-amber-500 group-hover:text-slate-900 transition-colors">
+                            Ver Vídeo <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </div>
+
+                </div>
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 border-t border-slate-900 py-12 text-center opacity-40">
+        <div class="fifa-font text-sm uppercase tracking-widest">Ismael Ruesca | Informe</div>
+        <div class="text-[0.6rem] uppercase mt-2">Documento generado para el seguimiento exclusivo del jugador</div>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('radarFinal').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['FISICO', 'SALIDA BALÓN', 'INTELIGENCIA', 'DUELOS', 'LLEGADA', 'COMUNICACIÓN'],
+                datasets: [{
+                    label: 'Rendimiento Actual',
+                    data: [10, 6, 7, 9, 10, 4],
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    borderColor: '#f59e0b',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#f59e0b',
+                    pointRadius: 4
+                }, {
+                    label: 'Potencial Proyectado',
+                    data: [10, 9, 9, 10, 10, 9],
+                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                    borderColor: 'rgba(16, 185, 129, 0.4)',
+                    borderDash: [5, 5],
+                    borderWidth: 1,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        pointLabels: {
+                            color: '#94a3b8',
+                            font: { size: 10, family: 'Exo 2', weight: 'bold' }
+                        },
+                        ticks: { display: false, stepSize: 2 },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#64748b',
+                            font: { size: 10, family: 'Exo 2' },
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
